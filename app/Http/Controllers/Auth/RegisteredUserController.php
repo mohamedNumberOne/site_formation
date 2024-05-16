@@ -36,7 +36,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+       $validate =  $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'pnom' => ['required', 'string', 'max:255'],
             'activite' => ['required', 'numeric', 'max:50' , 'exists:activities,id' ],
@@ -47,10 +47,12 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+
+
         $user = User::create([
             'name' => $request->name,
             'pnom' => $request->pnom,
-            'activite_id' => $request->activite,
+            'activity_id' => $request->activite,
             'wilaya_id' => $request->wilaya,
             'tlf' => $request->tlf,
             'formation_id' => $request->formation,
@@ -58,10 +60,13 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+       
+            event(new Registered($user));
 
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+            Auth::login($user);
+    
+            return redirect(route('dashboard', absolute: false));
+       
+       
     }
 }

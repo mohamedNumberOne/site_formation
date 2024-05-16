@@ -22,6 +22,11 @@ class User extends Authenticatable
         'tlf',
         'email',
         'password',
+        'activity_id',
+        'wilaya_id',
+        'formation_id',
+
+
     ];
 
     /**
