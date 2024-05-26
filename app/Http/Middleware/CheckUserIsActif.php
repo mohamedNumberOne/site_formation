@@ -21,6 +21,9 @@ class CheckUserIsActif
 
             return $next($request);
 
+        }else {
+            Auth::logout();
+            return redirect('/login') ->   with( "actif_error" , "votre compte n'est plus actif") ;
         }
 
     }

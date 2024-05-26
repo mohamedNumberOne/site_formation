@@ -4,16 +4,15 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
- 
 
-Route::get('/dashboard', function () {
-    return view('dashboard'); 
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard'); 
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::get('/',  function() { return view('welcome') ; } )->name('welcome'); 
 Route::post('/', [    FormController::class  ,  'add_info' ]     )->name('form_ins'); 
-
 
 
 Route::middleware('auth')->group(function () {

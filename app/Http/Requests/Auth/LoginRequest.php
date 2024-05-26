@@ -41,18 +41,9 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        $credentials = $this->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            if (Auth::user()->actif != 1) {
-                Auth::logout();
-                redirect()->back()->with('erreur', 'Votre compte est désactivé.');
-            }
-        }
+        if ( ! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))    ) {
 
-        //////
-
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -60,7 +51,9 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        RateLimiter::clear($this->throttleKey());
+        RateLimiter::clear($this->throttleKey()); 
+
+
     }
 
     /**

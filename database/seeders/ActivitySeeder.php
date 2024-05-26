@@ -21,3 +21,4 @@ class ActivitySeeder extends Seeder
         (NULL, 'Autre ', NULL, NULL);");
     }
 }
+
